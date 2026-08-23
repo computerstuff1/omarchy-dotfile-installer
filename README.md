@@ -36,16 +36,17 @@ to `<name>.bak.<timestamp>` before being overwritten.
 
 1. Preflight checks (`omarchy`).
 2. Ensures the JetBrainsMono Nerd Font.
-3. Ensures core packages (`foot ghostty fastfetch starship`).
-4. Installs and applies the Dracula theme (`omarchy theme install` / `omarchy theme set`).
+3. Installs and applies the Dracula theme (`omarchy theme install` / `omarchy theme set`).
+   Cosmetic only: no packages are installed; app configs are copied for apps that
+   already exist.
    Browsers are excluded from theming: the theme's bundled `firefox/userChrome.css`
    is stripped, and the themed `BrowserThemeColor` policy written by
    `omarchy theme set` for Chromium-family browsers is removed.
-5. Copies the bundled `rob.*` plugins and clones the third-party plugins
+4. Copies the bundled `rob.*` plugins and clones the third-party plugins
    (`ai-usagebar`, `vitals`) with `omarchy plugin add`.
-6. Copies all configs into `~/.config/`.
-7. Copies wallpapers and sets the active background.
-8. Restarts the shell and reloads Hyprland.
+5. Copies all configs into `~/.config/`.
+6. Copies wallpapers and sets the active background.
+7. Restarts the shell and reloads Hyprland.
 
 ## Repository layout
 

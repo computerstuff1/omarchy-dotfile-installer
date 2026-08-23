@@ -117,14 +117,6 @@ step_font() {
   fi
 }
 
-step_packages() {
-  banner "Packages"
-  # Core apps whose dotfiles ship in this repo. `omarchy pkg add` no-ops for
-  # packages that are already installed.
-  omarchy pkg add foot ghostty fastfetch starship
-  ok "core packages present"
-}
-
 step_theme() {
   banner "Theme"
   if [[ -d "$HOME/.config/omarchy/themes/$THEME_NAME" ]]; then
@@ -262,7 +254,6 @@ HELP
 
   step_preflight
   step_font
-  step_packages
   step_theme
   step_plugins
   step_configs
