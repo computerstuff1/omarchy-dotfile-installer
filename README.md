@@ -72,4 +72,4 @@ sddm/                       # my-split theme + SDDM config snippet
   preferred mode (`GDK_SCALE` is pinned to `1`). Adjust it for HiDPI/refresh
   needs on other hardware.
 - The SDDM wallpaper and lock-screen avatar are your personal assets and are
-  bundled in this (private) repo.
+  bundled in this (Public) repo.
