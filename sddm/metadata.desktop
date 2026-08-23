@@ -1,0 +1,7 @@
+[SddmGreeterTheme]
+Name=My Split
+Description=Split sign-in theme ported from the lock screen explorer design
+Author=Rob
+Type=sddm-theme
+Version=1.0
+QtVersion=6
