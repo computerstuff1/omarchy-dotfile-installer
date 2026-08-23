@@ -134,9 +134,34 @@ step_theme() {
     omarchy theme install "$THEME_REPO"
     ok "theme installed"
   fi
+
+  # Firefox: strip the bundled userChrome.css from the installed theme so the
+  # browser UI is never re-skinned. The theme is re-applied below from this
+  # cleaned copy.
+  rm -rf "$HOME/.config/omarchy/themes/$THEME_NAME/firefox"
+
   info "applying theme: $THEME_NAME"
   omarchy theme set "$THEME_NAME"
   ok "theme applied"
+
+  # Chromium-family browsers (Chromium, Chrome, Edge, Brave): `omarchy theme
+  # set` always writes a themed BrowserThemeColor policy via
+  # omarchy-theme-set-browser. Remove it so the browser keeps its default look.
+  info "excluding web browsers from theming"
+  for f in \
+    /etc/chromium/policies/managed/color.json \
+    /etc/opt/chrome/policies/managed/color.json \
+    /etc/opt/edge/policies/managed/color.json \
+    /etc/brave/policies/managed/color.json
+  do
+    if [[ -e "$f" ]]; then
+      if sudo -n rm -f "$f" 2>/dev/null; then
+        ok "removed browser theme policy: $f"
+      else
+        warn "cannot remove $f without root; remove it manually"
+      fi
+    fi
+  done
 }
 
 step_plugins() {
