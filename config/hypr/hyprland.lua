@@ -27,8 +27,3 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
-
--- The About window's auto-fit measurement is skipped when a user fastfetch
--- config exists, leaving it at the default 920x480 which scrolls. Pin it to
--- the size that hugs the content.
-o.window("org.omarchy.about", { size = { 1097, 633 } })
