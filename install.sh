@@ -3,8 +3,8 @@
 # Omarchy dotfile installer
 #
 # Reproduces a specific Omarchy desktop look: Dracula theme, JetBrainsMono Nerd
-# Font, custom bar/menu/clock/workspaces/lock plugins, wallpapers, terminal
-# configs, and a custom SDDM login screen.
+# Font, custom bar/menu/clock/workspaces plugins, wallpapers, and terminal
+# configs.
 #
 # Idempotent: safe to re-run. Existing files are backed up before being
 # overwritten, and already-installed themes/plugins/packages are skipped.
@@ -15,7 +15,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$SCRIPT_DIR/config"
 PLUGINS_DIR="$SCRIPT_DIR/plugins"
 BACKGROUNDS_DIR="$SCRIPT_DIR/backgrounds"
-SDDM_DIR="$SCRIPT_DIR/sddm"
 
 # ----------------------------------------------------------------------------
 # Cosmetic logging
@@ -45,7 +44,7 @@ THEME_NAME="dracula"
 ACTIVE_WALLPAPER="They live Desktop.png"
 
 # Plugins bundled in this repo (copied verbatim into ~/.config/omarchy/plugins).
-BUNDLED_PLUGINS=(rob.bar rob.clock rob.lock rob.menu rob.workspaces)
+BUNDLED_PLUGINS=(rob.bar rob.clock rob.menu rob.workspaces)
 
 # Third-party plugins installed from git.
 #   "<plugin-id>" "<git-url>"
@@ -103,7 +102,6 @@ install_dir() {
 step_preflight() {
   banner "Preflight"
   require omarchy "This installer targets Omarchy (https://omarchy.org)."
-  require sudo "sudo is required to install the SDDM login theme."
   info "Omarchy $(omarchy version)"
   ok "preflight passed"
 }
@@ -198,28 +196,6 @@ step_backgrounds() {
   ok "wallpaper set"
 }
 
-step_sddm() {
-  banner "SDDM login theme"
-
-  local theme_dst="/usr/share/sddm/themes/my-split"
-  local conf_src="$SDDM_DIR/omarchy-dotfiles.conf"
-  local conf_dst="/etc/sddm.conf.d/99-omarchy-dotfiles.conf"
-
-  info "installing SDDM theme (requires sudo)"
-  sudo install -d "$theme_dst"
-  for f in "$SDDM_DIR"/Main.qml "$SDDM_DIR"/metadata.desktop \
-           "$SDDM_DIR"/theme.conf "$SDDM_DIR"/avatar.png "$SDDM_DIR"/wallpaper.png; do
-    [[ -f "$f" ]] || continue
-    sudo install -m 0644 "$f" "$theme_dst/"
-  done
-  ok "SDDM theme copied to $theme_dst"
-
-  info "configuring SDDM to use the theme"
-  sudo install -d /etc/sddm.conf.d
-  sudo cp "$conf_src" "$conf_dst"
-  ok "SDDM configured: $conf_dst"
-}
-
 step_apply() {
   banner "Apply"
 
@@ -251,7 +227,7 @@ Options:
   -h, --help   Show this help and exit.
 
 The script is idempotent. Existing files are backed up before being
-overwritten. Run from a terminal; sudo is prompted once for the SDDM theme.
+overwritten. Run from a terminal.
 HELP
     exit 0
   fi
@@ -266,11 +242,9 @@ HELP
   step_plugins
   step_configs
   step_backgrounds
-  step_sddm
   step_apply
 
   printf '\n%s\n' "${C_GREEN}${C_BOLD}Install complete.${C_RESET}"
-  printf 'Log out and back in (or reboot) to see the SDDM login screen.\n'
 }
 
 main "$@"

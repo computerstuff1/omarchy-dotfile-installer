@@ -67,21 +67,11 @@
     "transparent": false
   },
   "cloneSourceRestores": [
-    "rob.menu",
-    "rob.lock"
+    "rob.menu"
   ],
   "disabledPlugins": [
-    "omarchy.menu",
-    "omarchy.lock"
+    "omarchy.menu"
   ],
-  "idle": {
-    "lock": 300,
-    "screensaver": 150
-  },
-  "plugins": [
-    {
-      "id": "rob.lock"
-    }
-  ],
+  "plugins": [],
   "version": 1
 }
