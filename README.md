@@ -28,7 +28,7 @@ screen.
 ## Install
 
 ```bash
-git clone git@github.com:computerstuff1/omarchy-dotfile-installer.git
+git clone https://github.com/computerstuff1/omarchy-dotfile-installer.git
 cd omarchy-dotfile-installer
 ./install.sh
 ```
