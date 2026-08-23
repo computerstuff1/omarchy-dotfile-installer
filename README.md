@@ -19,7 +19,7 @@ screen.
 | Terminals | foot, ghostty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
-
+avatar.png
 ## Requirements
 
 - An existing [Omarchy](https://omarchy.org) installation.
@@ -65,7 +65,7 @@ sddm/                       # my-split theme + SDDM config snippet
 ```
 
 ## Notes
-- SDDM/ Lockscreen username is Hard coded Rob.
+- SDDM/ Lockscreen username is Hard coded Rob in avatar.png.
 - The Dracula theme and third-party plugins are installed from their upstream
   git repos, not vendored, so they stay updateable.
 - `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
