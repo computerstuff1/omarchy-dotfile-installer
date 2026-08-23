@@ -123,7 +123,7 @@ step_packages() {
   banner "Packages"
   # Core apps whose dotfiles ship in this repo. `omarchy pkg add` no-ops for
   # packages that are already installed.
-  omarchy pkg add foot ghostty fastfetch starship btop git
+  omarchy pkg add foot ghostty fastfetch starship
   ok "core packages present"
 }
 
@@ -174,20 +174,14 @@ step_configs() {
   info "installing Omarchy shell config"
   install_file "$CONFIG_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
   install_file "$CONFIG_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
-  install_file "$CONFIG_DIR/omarchy/extensions/omarchy-menu.jsonc" \
-    "$HOME/.config/omarchy/extensions/omarchy-menu.jsonc"
 
   info "installing terminal configs"
-  install_file "$CONFIG_DIR/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
   install_file "$CONFIG_DIR/foot/foot.ini"           "$HOME/.config/foot/foot.ini"
-  install_file "$CONFIG_DIR/kitty/kitty.conf"        "$HOME/.config/kitty/kitty.conf"
   install_file "$CONFIG_DIR/ghostty/config"          "$HOME/.config/ghostty/config"
 
   info "installing app configs"
   install_file "$CONFIG_DIR/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc"
   install_file "$CONFIG_DIR/starship.toml"          "$HOME/.config/starship.toml"
-  install_file "$CONFIG_DIR/git/config"             "$HOME/.config/git/config"
-  install_file "$CONFIG_DIR/btop/btop.conf"         "$HOME/.config/btop/btop.conf"
 }
 
 step_backgrounds() {

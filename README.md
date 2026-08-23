@@ -16,9 +16,9 @@ screen.
 | Status bar | Custom `rob.bar` layout (menu, workspaces, clock, vitals, AI usage bar, tray) |
 | Lock screen | Custom `rob.lock` (split-style) |
 | Login screen | Custom `my-split` SDDM theme |
-| Terminals | foot, ghostty (configs also included for alacritty + kitty) |
-| Apps | fastfetch, starship, git, btop configs |
-| Hyprland | monitor, look'n'feel, input, binding overrides |
+| Terminals | foot, ghostty (font size 11) |
+| Apps | fastfetch, starship configs |
+| Hyprland | monitor (auto-detect), look'n'feel overrides |
 
 ## Requirements
 
@@ -40,7 +40,7 @@ to `<name>.bak.<timestamp>` before being overwritten.
 
 1. Preflight checks (`omarchy`, `sudo`).
 2. Ensures the JetBrainsMono Nerd Font.
-3. Ensures core packages (`foot ghostty fastfetch starship btop git`).
+3. Ensures core packages (`foot ghostty fastfetch starship`).
 4. Installs and applies the Dracula theme (`omarchy theme install` / `omarchy theme set`).
 5. Copies the bundled `rob.*` plugins and clones the third-party plugins
    (`ai-usagebar`, `vitals`) with `omarchy plugin add`.
@@ -55,10 +55,10 @@ to `<name>.bak.<timestamp>` before being overwritten.
 ```
 install.sh                  # the installer
 config/                     # dotfiles, mirrored into ~/.config/
-  hypr/                     # Hyprland configs
-  omarchy/                  # shell.json, defaults, menu extension
-  alacritty/ foot/ kitty/ ghostty/   # terminal configs
-  fastfetch/ starship.toml git/ btop/
+  hypr/                     # hyprland.lua, monitors.lua, looknfeel.lua
+  omarchy/                  # shell.json, defaults/agent
+  foot/ ghostty/            # terminal configs (font size 11)
+  fastfetch/ starship.toml
 plugins/                    # bundled rob.* plugins
 backgrounds/dracula/        # wallpapers
 sddm/                       # my-split theme + SDDM config snippet
@@ -68,7 +68,8 @@ sddm/                       # my-split theme + SDDM config snippet
 
 - The Dracula theme and third-party plugins are installed from their upstream
   git repos, not vendored, so they stay updateable.
-- `config/hypr/monitors.lua` targets a `DP-1` display at `1920x1080@143.99`.
-  Adjust it for other hardware.
+- `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
+  preferred mode (`GDK_SCALE` is pinned to `1`). Adjust it for HiDPI/refresh
+  needs on other hardware.
 - The SDDM wallpaper and lock-screen avatar are your personal assets and are
   bundled in this (private) repo.
