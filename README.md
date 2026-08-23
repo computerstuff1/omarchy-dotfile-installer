@@ -26,7 +26,7 @@ avatar.png
 - `sudo` access (for the SDDM theme).
 
 ## Install
-
+metadata.desktop
 ```bash
 git clone https://github.com/computerstuff1/omarchy-dotfile-installer.git
 cd omarchy-dotfile-installer
@@ -65,7 +65,7 @@ sddm/                       # my-split theme + SDDM config snippet
 ```
 
 ## Notes
-- SDDM/ Lockscreen username is Hard coded Rob in avatar.png.
+- SDDM/ Lockscreen username is Hard coded Rob in metadata.desktop.
 - The Dracula theme and third-party plugins are installed from their upstream
   git repos, not vendored, so they stay updateable.
 - `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
