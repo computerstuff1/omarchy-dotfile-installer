@@ -54,7 +54,7 @@ to `<name>.bak.<timestamp>` before being overwritten.
 install.sh                  # the installer
 config/                     # dotfiles, mirrored into ~/.config/
   hypr/                     # hyprland.lua, monitors.lua, looknfeel.lua
-  omarchy/                  # shell.json, defaults/agent
+  omarchy/                  # shell.json, defaults/agent, branding/about.txt
   foot/ ghostty/            # terminal configs (font size 11)
   fastfetch/ starship.toml
 plugins/                    # bundled rob.* plugins

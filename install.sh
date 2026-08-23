@@ -147,10 +147,10 @@ step_theme() {
     /etc/brave/policies/managed/color.json
   do
     if [[ -e "$f" ]]; then
-      if sudo -n rm -f "$f" 2>/dev/null; then
+      if sudo rm -f "$f" 2>/dev/null; then
         ok "removed browser theme policy: $f"
       else
-        warn "cannot remove $f without root; remove it manually"
+        warn "cannot remove $f; remove it manually"
       fi
     fi
   done
@@ -189,6 +189,7 @@ step_configs() {
   info "installing Omarchy shell config"
   install_file "$CONFIG_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
   install_file "$CONFIG_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
+  install_file "$CONFIG_DIR/omarchy/branding/about.txt" "$HOME/.config/omarchy/branding/about.txt"
 
   info "installing terminal configs"
   install_file "$CONFIG_DIR/foot/foot.ini"           "$HOME/.config/foot/foot.ini"
