@@ -171,8 +171,16 @@ step_plugins() {
       ok "plugin already installed: $id"
     else
       info "cloning plugin: $id"
-      omarchy plugin add "$url" --yes
+      omarchy plugin add "$url" --yes --enable
       ok "plugin installed: $id"
+      continue
+    fi
+    # Re-runs may find the plugin installed but disabled; make sure it's enabled
+    # so it shows up in the bar.
+    if ! omarchy plugin list --json | jq -e --arg id "$id" 'any(.[]; .id == $id and .enabled)' >/dev/null 2>&1; then
+      info "enabling plugin: $id"
+      omarchy plugin enable "$id"
+      ok "plugin enabled: $id"
     fi
   done
 }
