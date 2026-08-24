@@ -3,7 +3,7 @@
   "logo": {
     "type": "file",
     "source": "~/.config/omarchy/branding/about.txt",
-    "color": { "1": "green" },
+    "color": { "1": "#1793D1" },
     "padding": {
       "top": 2,
       "right": 6,
@@ -138,18 +138,18 @@
     {
       "type": "command",
       "key": "󱦟 OS Age",
-      "keyColor": "white",
+      "keyColor": "magenta",
       "text": "echo $(( ($(date +%s) - $(stat -c %W /)) / 86400 )) days"
     },
     {
       "type": "uptime",
       "key": "󱫐 Uptime",
-      "keyColor": "white"
+      "keyColor": "magenta"
     },
     {
       "type": "command",
       "key": " Update",
-      "keyColor": "white",
+      "keyColor": "magenta",
       "text": "updated=$(omarchy-version-pkgs); echo \"$updated\""
     },
     {
