@@ -12,7 +12,7 @@ workspaces plugins, and terminal and app configs.
 | Font | JetBrainsMono Nerd Font |
 | Icon theme | Yaru-red (applied by the Dracula theme) |
 | Wallpaper | "They live Desktop.png" (plus 2 others) |
-| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, system updates, tray) |
+| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, vitals, system updates, tray) |
 | Terminals | foot, ghostty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
@@ -43,7 +43,7 @@ to `<name>.bak.<timestamp>` before being overwritten.
    is stripped, and the themed `BrowserThemeColor` policy written by
    `omarchy theme set` for Chromium-family browsers is removed.
 4. Copies the bundled `rob.*` plugins (bar, clock, menu, system-updates,
-   workspaces) into `~/.config/omarchy/plugins/`.
+   vitals, workspaces) into `~/.config/omarchy/plugins/`.
 5. Copies all configs into `~/.config/`.
 6. Copies wallpapers and sets the active background.
 7. Restarts the shell and reloads Hyprland.
@@ -57,7 +57,7 @@ config/                     # dotfiles, mirrored into ~/.config/
   omarchy/                  # shell.json, bin/, defaults/agent, branding/about.txt
   foot/ ghostty/            # terminal configs (font size 11)
   fastfetch/ starship.toml
-plugins/                    # bundled rob.* plugins (bar, clock, menu, system-updates, workspaces)
+plugins/                    # bundled rob.* plugins (bar, clock, menu, system-updates, vitals, workspaces)
 backgrounds/dracula/        # wallpapers
 ```
 

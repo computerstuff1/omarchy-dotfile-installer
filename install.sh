@@ -3,8 +3,8 @@
 # Omarchy dotfile installer
 #
 # Reproduces a specific Omarchy desktop look: Dracula theme, JetBrainsMono Nerd
-# Font, custom bar/menu/clock/workspaces/system-updates plugins, wallpapers, and
-# terminal configs.
+# Font, custom bar/menu/clock/workspaces/system-updates/vitals plugins,
+# wallpapers, and terminal configs.
 #
 # Idempotent: safe to re-run. Existing files are backed up before being
 # overwritten, and already-installed themes/plugins/packages are skipped.
@@ -44,7 +44,7 @@ THEME_NAME="dracula"
 ACTIVE_WALLPAPER="They live Desktop.png"
 
 # Plugins bundled in this repo (copied verbatim into ~/.config/omarchy/plugins).
-BUNDLED_PLUGINS=(rob.bar rob.clock rob.menu rob.system-updates rob.workspaces)
+BUNDLED_PLUGINS=(rob.bar rob.clock rob.menu rob.system-updates rob.vitals rob.workspaces)
 
 # ----------------------------------------------------------------------------
 # Helpers

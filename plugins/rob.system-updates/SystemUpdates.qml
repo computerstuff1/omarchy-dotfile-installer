@@ -60,7 +60,7 @@ BarWidget {
 
   Row {
     id: row
-    spacing: Style.spaceReal(4)
+    spacing: 3
     visible: root.updateCount >= 0
 
     BarIconButton {
@@ -70,7 +70,9 @@ BarWidget {
       text: root.pacmanIcon
       active: root.updateCount > 0
       activeColor: "#ffd75f"
-      slotSize: 24
+      slotSize: 12
+      opticalSize: 12
+      horizontalMargin: 0
       fontSize: 12
       tooltipText: root.updateCount > 0
         ? "Pending updates: " + root.updateCount
@@ -86,7 +88,7 @@ BarWidget {
       text: root.displayText
       color: root.bar ? root.bar.barForeground : Color.foreground
       font.family: root.bar ? root.bar.fontFamily : Style.font.family
-      font.pixelSize: Style.font.caption
+      font.pixelSize: Style.font.body
       visible: root.updateCount >= 0
 
       MouseArea {
