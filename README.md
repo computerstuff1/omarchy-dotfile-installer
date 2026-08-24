@@ -21,6 +21,7 @@ workspaces plugins, and terminal and app configs.
 <img width="264" height="80" alt="screenshot-2026-08-24_13-26-32" src="https://github.com/user-attachments/assets/ae0742aa-074e-4fe7-8012-f4d36ff5275e" />
 <img width="1920" height="1080" alt="screenshot-2026-08-24_20-00-51" src="https://github.com/user-attachments/assets/318942bc-74d7-4ee5-98ae-e3582d5cf52b" />
 <img width="329" height="383" alt="screenshot-2026-08-24_19-15-53" src="https://github.com/user-attachments/assets/0ff0c0f4-c630-49dc-8734-4be40336fa82" />
+<img width="1006" height="708" alt="screenshot-2026-08-25_00-56-05" src="https://github.com/user-attachments/assets/d7d0e63d-7c9a-4c38-8c61-6fcc1564aa40" />
 
 ## Requirements
 
