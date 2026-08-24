@@ -12,7 +12,7 @@ workspaces plugins, and terminal and app configs.
 | Font | JetBrainsMono Nerd Font |
 | Icon theme | Yaru-red (applied by the Dracula theme) |
 | Wallpaper | "They live Desktop.png" (plus 2 others) |
-| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, system updates, vitals, AI usage bar, tray) |
+| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, system updates, tray) |
 | Terminals | foot, ghostty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
@@ -43,8 +43,7 @@ to `<name>.bak.<timestamp>` before being overwritten.
    is stripped, and the themed `BrowserThemeColor` policy written by
    `omarchy theme set` for Chromium-family browsers is removed.
 4. Copies the bundled `rob.*` plugins (bar, clock, menu, system-updates,
-   workspaces) and clones the third-party plugins (`ai-usagebar`, `vitals`) with
-   `omarchy plugin add`.
+   workspaces) into `~/.config/omarchy/plugins/`.
 5. Copies all configs into `~/.config/`.
 6. Copies wallpapers and sets the active background.
 7. Restarts the shell and reloads Hyprland.
@@ -63,8 +62,6 @@ backgrounds/dracula/        # wallpapers
 ```
 
 ## Notes
-- The Dracula theme and third-party plugins are installed from their upstream
-  git repos, not vendored, so they stay updateable.
 - `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
   preferred mode (`GDK_SCALE` is pinned to `1`). Adjust it for HiDPI/refresh
   needs on other hardware.

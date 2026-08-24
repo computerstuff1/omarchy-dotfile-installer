@@ -46,13 +46,6 @@ ACTIVE_WALLPAPER="They live Desktop.png"
 # Plugins bundled in this repo (copied verbatim into ~/.config/omarchy/plugins).
 BUNDLED_PLUGINS=(rob.bar rob.clock rob.menu rob.system-updates rob.workspaces)
 
-# Third-party plugins installed from git.
-#   "<plugin-id>" "<git-url>"
-THIRD_PARTY_PLUGINS=(
-  "akitaonrails.ai-usagebar|https://github.com/akitaonrails/ai-usagebar.git"
-  "io.github.woogy7.vitals|https://github.com/Woogy7/omarchy-vitals.git"
-)
-
 # ----------------------------------------------------------------------------
 # Helpers
 # ----------------------------------------------------------------------------
@@ -162,26 +155,6 @@ step_plugins() {
   info "installing bundled plugins"
   for plugin in "${BUNDLED_PLUGINS[@]}"; do
     install_dir "$PLUGINS_DIR/$plugin" "$HOME/.config/omarchy/plugins/$plugin"
-  done
-
-  info "installing third-party plugins"
-  for entry in "${THIRD_PARTY_PLUGINS[@]}"; do
-    local id="${entry%%|*}" url="${entry##*|}"
-    if [[ -d "$HOME/.config/omarchy/plugins/$id" ]]; then
-      ok "plugin already installed: $id"
-    else
-      info "cloning plugin: $id"
-      omarchy plugin add "$url" --yes --enable
-      ok "plugin installed: $id"
-      continue
-    fi
-    # Re-runs may find the plugin installed but disabled; make sure it's enabled
-    # so it shows up in the bar.
-    if ! omarchy plugin list --json | jq -e --arg id "$id" 'any(.[]; .id == $id and .enabled)' >/dev/null 2>&1; then
-      info "enabling plugin: $id"
-      omarchy plugin enable "$id"
-      ok "plugin enabled: $id"
-    fi
   done
 }
 
