@@ -55,6 +55,26 @@ require() {
   fi
 }
 
+# Delete older backups of a target, keeping only the most recent one.
+# Backups follow the "<dst>.bak.<timestamp>" pattern.
+prune_backups() {
+  local dst="$1"
+  local bak
+  local newest
+  local dir; dir="$(dirname "$dst")"
+  local name; name="$(basename "$dst")"
+  newest="$(find "$dir" -maxdepth 1 -name "$name.bak.*" -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-)"
+  if [[ -z "$newest" ]]; then
+    return 0
+  fi
+  while IFS= read -r -d '' bak; do
+    if [[ "$bak" != "$newest" ]]; then
+      rm -rf -- "$bak"
+      warn "removed old backup: $(basename "$bak")"
+    fi
+  done < <(find "$dir" -maxdepth 1 -name "$name.bak.*" -print0 2>/dev/null)
+}
+
 # Copy a file into place, backing up an existing target that differs.
 install_file() {
   local src="$1" dst="$2"
@@ -67,6 +87,7 @@ install_file() {
     bak="$dst.bak.$(date +%s)"
     mv "$dst" "$bak"
     warn "backed up existing file: $dst -> $(basename "$bak")"
+    prune_backups "$dst"
   fi
   mkdir -p "$(dirname "$dst")"
   cp "$src" "$dst"
@@ -85,6 +106,7 @@ install_dir() {
     bak="$dst.bak.$(date +%s)"
     mv "$dst" "$bak"
     warn "backed up existing dir: $dst -> $(basename "$bak")"
+    prune_backups "$dst"
   fi
   mkdir -p "$dst"
   cp -r "$src"/. "$dst"/
