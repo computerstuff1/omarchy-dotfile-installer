@@ -8,7 +8,7 @@ workspaces plugins, and terminal and app configs.
 
 | Area | Result |
 |------|--------|
-| Theme | Dracula |
+| Theme | Dracula (accent + popup/menu/notification borders tuned to the window border) |
 | Font | JetBrainsMono Nerd Font |
 | Icon theme | Yaru-red (applied by the Dracula theme) |
 | Wallpaper | "They live Desktop.png" (plus 2 others) |

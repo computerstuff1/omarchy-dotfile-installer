@@ -125,6 +125,14 @@ step_theme() {
   # cleaned copy.
   rm -rf "$HOME/.config/omarchy/themes/$THEME_NAME/firefox"
 
+  # Apply the tuned palette overlay (accent + popup/notification/menu/tooltip
+  # borders matched to the window border) over the cloned theme so the shell
+  # chrome shares the window border color.
+  info "applying palette overlay"
+  for f in colors.toml shell.popups.toml shell.notifications.toml shell.menu.toml shell.tooltip.toml; do
+    install_file "$CONFIG_DIR/omarchy/themes/$THEME_NAME/$f" "$HOME/.config/omarchy/themes/$THEME_NAME/$f"
+  done
+
   info "applying theme: $THEME_NAME"
   omarchy theme set "$THEME_NAME"
   ok "theme applied"
