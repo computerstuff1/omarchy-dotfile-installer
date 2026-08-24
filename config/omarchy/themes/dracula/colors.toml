@@ -32,4 +32,4 @@ bright_blue = "#d6acff"
 bright_magenta = "#ff92df"
 
 hyprland_active_border = "#1793d1"
-hyprland_inactive_border = "rgba(68,71,90,0.8)"
+hyprland_inactive_border = "#1793d1"
