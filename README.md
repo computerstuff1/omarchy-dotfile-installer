@@ -70,3 +70,28 @@ backgrounds/dracula/        # wallpapers
 - `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
   preferred mode (`GDK_SCALE` is pinned to `1`). Adjust it for HiDPI/refresh
   needs on other hardware.
+
+## Show fastfetch on every terminal
+
+Add this to `~/.bashrc` to print your system info once per new terminal:
+
+```bash
+# Show system info once per terminal (guarded against double-sourcing)
+if [[ -z "$FASTFETCH_SHOWN" ]]; then
+  export FASTFETCH_SHOWN=1
+  fastfetch
+fi
+```
+
+**Where to put it:** at the bottom of `~/.bashrc` (`nano ~/.bashrc`).
+
+**What it does:**
+- `fastfetch` prints the system info banner.
+- The `FASTFETCH_SHOWN` guard makes it run exactly **once**, even when
+  `~/.bashrc` gets sourced more than once per session (e.g. via
+  `~/.bash_profile`). This prevents fastfetch from appearing multiple times.
+- It re-arms for every new terminal, so each window shows the info once.
+
+**Avoid:** adding a bare `fastfetch` (or several) to `~/.bashrc`, and never
+append to it with `echo "fastfetch" >> ~/.bashrc` — that self-modifying line
+grows the file and runs fastfetch again and again on every launch.
