@@ -27,3 +27,7 @@ require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
+
+-- The custom fastfetch config (~/.config/fastfetch/config.jsonc) disables the
+-- About window's auto-fit, so size the window to fit its taller three-box layout.
+o.window("org.omarchy.about", { size = { 640, 760 } })
