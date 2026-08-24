@@ -63,7 +63,6 @@ backgrounds/dracula/        # wallpapers
 ```
 
 ## Notes
-- SDDM/ Lockscreen username is Hard coded Rob in metadata.desktop.
 - The Dracula theme and third-party plugins are installed from their upstream
   git repos, not vendored, so they stay updateable.
 - `config/hypr/monitors.lua` auto-detects the primary monitor and uses its
