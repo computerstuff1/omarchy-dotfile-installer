@@ -62,7 +62,7 @@ install_file() {
     warn "skipping missing source: $src"
     return 0
   fi
-    if [[ -e "$dst" ]] && ! cmp -s "$src" "$dst"; then
+  if [[ -e "$dst" ]] && ! cmp -s "$src" "$dst"; then
     local bak
     bak="$dst.bak.$(date +%s)"
     mv "$dst" "$bak"
