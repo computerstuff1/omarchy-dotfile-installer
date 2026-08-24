@@ -21,6 +21,7 @@ workspaces plugins, and terminal and app configs.
 ## Requirements
 
 - An existing [Omarchy](https://omarchy.org) installation.
+<img width="264" height="80" alt="screenshot-2026-08-24_13-26-32" src="https://github.com/user-attachments/assets/a657c9b1-2359-45c7-9e1c-cc4f1abcdd53" />
 
 ## Install
 
