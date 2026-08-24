@@ -139,7 +139,9 @@ step_theme() {
 
   # Chromium-family browsers (Chromium, Chrome, Edge, Brave): `omarchy theme
   # set` always writes a themed BrowserThemeColor policy via
-  # omarchy-theme-set-browser. Remove it so the browser keeps its default look.
+  # omarchy-theme-set-browser. The managed policy dirs are world-writable (so
+  # the theme can write there), so remove the policy file directly to keep the
+  # browser's default look.
   info "excluding web browsers from theming"
   for f in \
     /etc/chromium/policies/managed/color.json \
@@ -148,11 +150,8 @@ step_theme() {
     /etc/brave/policies/managed/color.json
   do
     if [[ -e "$f" ]]; then
-      if sudo rm -f "$f" 2>/dev/null; then
-        ok "removed browser theme policy: $f"
-      else
-        warn "cannot remove $f; remove it manually"
-      fi
+      rm -f "$f"
+      ok "removed browser theme policy: $f"
     fi
   done
 }
