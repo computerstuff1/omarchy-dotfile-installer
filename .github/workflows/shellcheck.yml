@@ -1,0 +1,25 @@
+name: ShellCheck
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: koalaman/shellcheck-action@v0.2.0
+        with:
+          severity: warning
+          script: |
+            shellcheck -S warning install.sh
+            shellcheck -S warning config/omarchy/bin/system-update-count
