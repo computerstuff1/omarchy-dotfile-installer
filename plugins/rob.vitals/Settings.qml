@@ -53,6 +53,7 @@ Item {
   Component.onCompleted: syncOrder()
 
   function showName(key) {
+    if (typeof key !== "string" || key.length === 0) return ""
     return "show" + key.charAt(0).toUpperCase() + key.slice(1)
   }
 
@@ -90,7 +91,7 @@ Item {
     bar: root.bar
 
     contentWidth: Style.space(272)
-    contentHeight: Style.space(250)
+    contentHeight: Style.space(310)
 
     Column {
       width: parent.width

@@ -27,6 +27,7 @@ BarWidget {
   readonly property var metricOrder: root.setting("metricOrder", ["cpu", "mem", "disk"])
 
   function metricShown(key) {
+    if (typeof key !== "string" || key.length === 0) return true
     return root.shown("show" + key.charAt(0).toUpperCase() + key.slice(1))
   }
 
@@ -46,8 +47,8 @@ BarWidget {
 
   function metricDescription(key) {
     if (key === "cpu") return "Processor load"
-    if (key === "mem") return "RAM in use"
-    if (key === "disk") return "Root filesystem"
+    if (key === "mem") return "RAM in use (GB)"
+    if (key === "disk") return "Used / free (GB)"
     return ""
   }
 
@@ -55,6 +56,57 @@ BarWidget {
     if (key === "cpu") return root.cpu
     if (key === "mem") return root.mem
     if (key === "disk") return root.disk
+    return null
+  }
+
+  // GB with one decimal for "used"; the total reads as a whole number.
+  // Values are decimal GB (÷1e9), matching how specs are marketed.
+  function gb1(bytes) {
+    if (bytes === null || bytes === undefined) return null
+    var v = bytes / 1000000000
+    return v >= 100 ? Math.round(v) : Math.round(v * 10) / 10
+  }
+
+  function gbInt(bytes) {
+    if (bytes === null || bytes === undefined) return null
+    return Math.floor(bytes / 1000000000)
+  }
+
+  function formatBytesPair(used, total) {
+    var u = root.gb1(used)
+    var t = root.gbInt(total)
+    if (u === null || t === null) return "–"
+    return u + "/" + t + "GB"
+  }
+
+  // What a metric reads as in the bar: CPU is a percent, mem is used/total GB,
+  // disk is the free space remaining (GB).
+  function metricText(key) {
+    if (key === "cpu") return root.pct(root.cpu)
+    if (key === "mem") {
+      var m = root.mem
+      return m ? root.formatBytesPair(m.used, m.total) : "–"
+    }
+    if (key === "disk") {
+      var d = root.disk
+      if (!d) return "–"
+      var free = d.total - d.used
+      return root.gb1(d.used) + "/" + Math.round(free / 1000000000) + "GB"
+    }
+    return ""
+  }
+
+  // 0-100 usage for colouring: CPU is its own percent, mem/disk use the ratio.
+  function metricPercent(key) {
+    if (key === "cpu") return root.cpu
+    if (key === "mem") {
+      var m = root.mem
+      return m && m.total > 0 ? m.used * 100 / m.total : null
+    }
+    if (key === "disk") {
+      var d = root.disk
+      return d && d.total > 0 ? d.used * 100 / d.total : null
+    }
     return null
   }
 
@@ -227,15 +279,15 @@ BarWidget {
 
         Text {
           text: root.metricIcon(modelData)
-          color: root.cellColor(root.metricValue(modelData))
+          color: root.cellColor(root.metricPercent(modelData))
           font.family: root.fontFamily
           font.pixelSize: root.cellSize
           anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
-          text: root.pct(root.metricValue(modelData))
-          color: root.cellColor(root.metricValue(modelData))
+          text: root.metricText(modelData)
+          color: root.cellColor(root.metricPercent(modelData))
           font.family: root.fontFamily
           font.pixelSize: root.cellSize
           anchors.verticalCenter: parent.verticalCenter

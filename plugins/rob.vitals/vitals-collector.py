@@ -50,7 +50,7 @@ def cpu_total():
     return busy, total
 
 
-def mem_percent():
+def mem_usage():
     meminfo = read("/proc/meminfo")
     if not meminfo:
         return None
@@ -63,15 +63,16 @@ def mem_percent():
     if not total:
         return None
     used = total - (available if available is not None else total)
-    return used * 100.0 / total
+    # /proc/meminfo reports in KiB; normalise to bytes to match the disk values.
+    return used * 1024, total * 1024
 
 
-def disk_percent(path="/"):
+def disk_usage(path="/"):
     try:
         usage = shutil.disk_usage(path)
     except OSError:
         return None
-    return usage.used * 100.0 / usage.total
+    return usage.used, usage.total
 
 
 def main():
@@ -95,10 +96,13 @@ def main():
             if d_total > 0:
                 cpu = round(d_busy * 100.0 / d_total, 1)
         prev = cur
-        mem = mem_percent()
-        disk = disk_percent()
-        snapshot = {"cpu": cpu, "mem": round(mem, 1) if mem is not None else None,
-                    "disk": round(disk, 1) if disk is not None else None}
+        mem = mem_usage()
+        disk = disk_usage()
+        snapshot = {
+            "cpu": cpu,
+            "mem": {"used": mem[0], "total": mem[1]} if mem else None,
+            "disk": {"used": disk[0], "total": disk[1]} if disk else None,
+        }
         sys.stdout.write(json.dumps(snapshot) + "\n")
         sys.stdout.flush()
         time.sleep(interval)
