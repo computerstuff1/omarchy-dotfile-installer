@@ -30,4 +30,4 @@ require("default.hypr.toggles")
 
 -- The custom fastfetch config (~/.config/fastfetch/config.jsonc) disables the
 -- About window's auto-fit, so size the window to fit its taller three-box layout.
-o.window("org.omarchy.about", { size = { 640, 760 } })
+o.window("org.omarchy.about", { size = { 1100,650 } })
