@@ -250,7 +250,7 @@ BarWidget {
     bar: root.bar
     text: root.chipIcon
     slotSize: Style.bar.statusSlot
-    fontSize: Style.font.caption
+    fontSize: 14
     tooltipText: "Vitals"
     onPressed: root.togglePanel()
   }
