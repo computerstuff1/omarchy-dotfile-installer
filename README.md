@@ -12,17 +12,17 @@ workspaces plugins, and terminal and app configs.
 | Font | JetBrainsMono Nerd Font |
 | Icon theme | Yaru-red (applied by the Dracula theme) |
 | Wallpaper | "They live Desktop.png" (plus 2 others) |
-| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, vitals, AI usage bar, tray) |
+| Status bar | Custom `rob.bar` layout (menu, workspaces, clock, system updates, vitals, AI usage bar, tray) |
 | Terminals | foot, ghostty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
-avatar.png
+
 ## Requirements
 
 - An existing [Omarchy](https://omarchy.org) installation.
 
 ## Install
-metadata.desktop
+
 ```bash
 git clone https://github.com/computerstuff1/omarchy-dotfile-installer.git
 cd omarchy-dotfile-installer
@@ -42,8 +42,9 @@ to `<name>.bak.<timestamp>` before being overwritten.
    Browsers are excluded from theming: the theme's bundled `firefox/userChrome.css`
    is stripped, and the themed `BrowserThemeColor` policy written by
    `omarchy theme set` for Chromium-family browsers is removed.
-4. Copies the bundled `rob.*` plugins and clones the third-party plugins
-   (`ai-usagebar`, `vitals`) with `omarchy plugin add`.
+4. Copies the bundled `rob.*` plugins (bar, clock, menu, system-updates,
+   workspaces) and clones the third-party plugins (`ai-usagebar`, `vitals`) with
+   `omarchy plugin add`.
 5. Copies all configs into `~/.config/`.
 6. Copies wallpapers and sets the active background.
 7. Restarts the shell and reloads Hyprland.
@@ -54,10 +55,10 @@ to `<name>.bak.<timestamp>` before being overwritten.
 install.sh                  # the installer
 config/                     # dotfiles, mirrored into ~/.config/
   hypr/                     # hyprland.lua, monitors.lua, looknfeel.lua
-  omarchy/                  # shell.json, defaults/agent, branding/about.txt
+  omarchy/                  # shell.json, bin/, defaults/agent, branding/about.txt
   foot/ ghostty/            # terminal configs (font size 11)
   fastfetch/ starship.toml
-plugins/                    # bundled rob.* plugins
+plugins/                    # bundled rob.* plugins (bar, clock, menu, system-updates, workspaces)
 backgrounds/dracula/        # wallpapers
 ```
 

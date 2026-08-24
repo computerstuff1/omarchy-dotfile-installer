@@ -18,9 +18,6 @@
         },
         {
           "id": "omarchy.weather"
-        },
-        {
-          "id": "omarchy.system-update"
         }
       ],
       "left": [
@@ -36,11 +33,14 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "io.github.woogy7.vitals",
-          "refreshSeconds": "2"
+          "id": "omarchy.agents"
         },
         {
-          "id": "omarchy.agents"
+          "id": "rob.system-updates"
+        },
+        {
+          "id": "io.github.woogy7.vitals",
+          "refreshSeconds": "2"
         },
         {
           "id": "akitaonrails.ai-usagebar",
