@@ -161,6 +161,8 @@ BarWidget {
   // Match WidgetButton's horizontalMargin so the widget keeps the same
   // breathing room as its neighbours instead of butting against them.
   readonly property real hMargin: Style.spaceReal(8.5)
+  // Lets the bar size the open-panel indicator to the widget's content.
+  readonly property real openPanelIndicatorWidth: root.anyShown ? row.implicitWidth : iconButton.implicitWidth
 
   // ---- settings popup plumbing ----------------------------------------------
   readonly property bool opened: settingsLoader.item ? settingsLoader.item.opened === true : false
@@ -170,7 +172,9 @@ BarWidget {
   }
 
   function close() {
-    if (settingsLoader.item && settingsLoader.item.close) settingsLoader.item.close()
+    // closeDirect avoids PopupCard.close() -> owner.close() recursion now that
+    // the popup is owned by this widget for the open-panel indicator.
+    if (settingsLoader.item && settingsLoader.item.closeDirect) settingsLoader.item.closeDirect()
   }
 
   function togglePanel() {

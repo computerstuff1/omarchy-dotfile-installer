@@ -27,6 +27,9 @@ Item {
   function open() { card.open = true }
   function toggle() { card.open = !card.open }
   function close() { card.close() }
+  // Sets the popup closed without going through PopupCard.close(), which would
+  // call owner.close() (the host widget) and bounce straight back here.
+  function closeDirect() { card.open = false }
   function closeForPopoutSwitch() { card.open = false }
   readonly property bool popoutSwitchClosing: false
 
@@ -89,6 +92,10 @@ Item {
     id: card
     anchorItem: root.anchorItem
     bar: root.bar
+    // The bar lights the open-panel indicator when its activePopout matches
+    // the mounted widget; owning this popup to the host widget makes the
+    // popout route through it.
+    owner: root.hostWidget
 
     contentWidth: Style.space(272)
     contentHeight: Style.space(310)
