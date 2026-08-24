@@ -17,11 +17,11 @@ workspaces plugins, and terminal and app configs.
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
 <img width="265" height="65" alt="screenshot-2026-08-24_13-25-49" src="https://github.com/user-attachments/assets/e99992cc-5858-4e82-832c-390c844a595e" />
+<img width="264" height="80" alt="screenshot-2026-08-24_13-26-32" src="https://github.com/user-attachments/assets/ae0742aa-074e-4fe7-8012-f4d36ff5275e" />
 
 ## Requirements
 
 - An existing [Omarchy](https://omarchy.org) installation.
-<img width="264" height="80" alt="screenshot-2026-08-24_13-26-32" src="https://github.com/user-attachments/assets/a657c9b1-2359-45c7-9e1c-cc4f1abcdd53" />
 
 ## Install
 
