@@ -21,6 +21,57 @@ BarWidget {
   readonly property bool showDisk: shown("showDisk")
   readonly property bool anyShown: showCpu || showMem || showDisk
 
+  // Display order of the metrics, as an array of keys ("cpu"/"mem"/"disk").
+  // Managed from the settings popup (drag to reorder) and persisted to
+  // shell.json like the show flags.
+  readonly property var metricOrder: root.setting("metricOrder", ["cpu", "mem", "disk"])
+
+  function metricShown(key) {
+    return root.shown("show" + key.charAt(0).toUpperCase() + key.slice(1))
+  }
+
+  function metricIcon(key) {
+    if (key === "cpu") return ""
+    if (key === "mem") return ""
+    if (key === "disk") return "󰋊"
+    return ""
+  }
+
+  function metricLabel(key) {
+    if (key === "cpu") return "CPU usage"
+    if (key === "mem") return "Memory usage"
+    if (key === "disk") return "Disk usage"
+    return ""
+  }
+
+  function metricDescription(key) {
+    if (key === "cpu") return "Processor load"
+    if (key === "mem") return "RAM in use"
+    if (key === "disk") return "Root filesystem"
+    return ""
+  }
+
+  function metricValue(key) {
+    if (key === "cpu") return root.cpu
+    if (key === "mem") return root.mem
+    if (key === "disk") return root.disk
+    return null
+  }
+
+  function orderedMetrics(onlyShown) {
+    var out = []
+    var order = root.metricOrder
+    for (var i = 0; i < order.length; i++) {
+      var key = order[i]
+      if (key !== "cpu" && key !== "mem" && key !== "disk") continue
+      if (onlyShown && !root.metricShown(key)) continue
+      out.push(key)
+    }
+    return out
+  }
+
+  readonly property var visibleMetrics: root.orderedMetrics(true)
+
   readonly property int intervalSeconds: Math.max(1, Math.min(10, Number(setting("intervalSeconds", 2)) || 2))
 
   readonly property string chipIcon: "󰍛" // nf-md-memory
@@ -121,6 +172,10 @@ BarWidget {
     root.persistSettings(values)
   }
 
+  function setMetricOrder(order) {
+    root.persistSettings({ metricOrder: order })
+  }
+
   function injectSettings() {
     var target = settingsLoader.item
     if (!target) return
@@ -162,69 +217,29 @@ BarWidget {
     rightPadding: root.hMargin
     anchors.verticalCenter: parent.verticalCenter
 
-    Row {
-      visible: root.showCpu
-      spacing: Style.space(3)
-      anchors.verticalCenter: parent.verticalCenter
+    Repeater {
+      model: root.visibleMetrics
 
-      Text {
-        text: ""
-        color: root.cellColor(root.cpu)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
+      Row {
+        required property string modelData
+        spacing: Style.space(3)
         anchors.verticalCenter: parent.verticalCenter
-      }
 
-      Text {
-        text: root.pct(root.cpu)
-        color: root.cellColor(root.cpu)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
-        anchors.verticalCenter: parent.verticalCenter
-      }
-    }
+        Text {
+          text: root.metricIcon(modelData)
+          color: root.cellColor(root.metricValue(modelData))
+          font.family: root.fontFamily
+          font.pixelSize: root.cellSize
+          anchors.verticalCenter: parent.verticalCenter
+        }
 
-    Row {
-      visible: root.showMem
-      spacing: Style.space(3)
-      anchors.verticalCenter: parent.verticalCenter
-
-      Text {
-        text: ""
-        color: root.cellColor(root.mem)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
-        anchors.verticalCenter: parent.verticalCenter
-      }
-
-      Text {
-        text: root.pct(root.mem)
-        color: root.cellColor(root.mem)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
-        anchors.verticalCenter: parent.verticalCenter
-      }
-    }
-
-    Row {
-      visible: root.showDisk
-      spacing: Style.space(3)
-      anchors.verticalCenter: parent.verticalCenter
-
-      Text {
-        text: "󰋊"
-        color: root.cellColor(root.disk)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
-        anchors.verticalCenter: parent.verticalCenter
-      }
-
-      Text {
-        text: root.pct(root.disk)
-        color: root.cellColor(root.disk)
-        font.family: root.fontFamily
-        font.pixelSize: root.cellSize
-        anchors.verticalCenter: parent.verticalCenter
+        Text {
+          text: root.pct(root.metricValue(modelData))
+          color: root.cellColor(root.metricValue(modelData))
+          font.family: root.fontFamily
+          font.pixelSize: root.cellSize
+          anchors.verticalCenter: parent.verticalCenter
+        }
       }
     }
   }
