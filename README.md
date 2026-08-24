@@ -16,6 +16,7 @@ workspaces plugins, and terminal and app configs.
 | Terminals | foot, ghostty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
+<img width="265" height="65" alt="screenshot-2026-08-24_13-25-49" src="https://github.com/user-attachments/assets/e99992cc-5858-4e82-832c-390c844a595e" />
 
 ## Requirements
 
