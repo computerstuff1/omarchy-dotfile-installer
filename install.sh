@@ -62,8 +62,9 @@ install_file() {
     warn "skipping missing source: $src"
     return 0
   fi
-  if [[ -e "$dst" ]] && ! cmp -s "$src" "$dst"; then
-    local bak="$dst.bak.$(date +%s)"
+    if [[ -e "$dst" ]] && ! cmp -s "$src" "$dst"; then
+    local bak
+    bak="$dst.bak.$(date +%s)"
     mv "$dst" "$bak"
     warn "backed up existing file: $dst -> $(basename "$bak")"
   fi
@@ -80,7 +81,8 @@ install_dir() {
     return 0
   fi
   if [[ -e "$dst" ]]; then
-    local bak="$dst.bak.$(date +%s)"
+    local bak
+    bak="$dst.bak.$(date +%s)"
     mv "$dst" "$bak"
     warn "backed up existing dir: $dst -> $(basename "$bak")"
   fi
