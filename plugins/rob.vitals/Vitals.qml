@@ -158,6 +158,42 @@ BarWidget {
   readonly property color foreground: root.bar ? root.bar.foreground : Color.foreground
   readonly property string fontFamily: root.bar ? root.bar.fontFamily : Style.font.family
   readonly property real cellSize: Style.font.body
+
+  // ---- hover tooltip ---------------------------------------------------------
+  // The bar's tooltip system only fires for targets that expose
+  // `tooltipHovered`, so surface that here (WidgetButton does the same) and
+  // show live values that refresh with each snapshot.
+  readonly property bool tooltipHovered: hover.hovered && visible && opacity !== 0
+
+  readonly property string tooltipText: {
+    var parts = []
+    var metrics = root.visibleMetrics
+    for (var i = 0; i < metrics.length; i++) {
+      var key = metrics[i]
+      parts.push(root.metricLabel(key) + " " + root.metricText(key))
+    }
+    return parts.length ? parts.join("  ·  ") : "Vitals"
+  }
+
+  function showHoverTooltip() {
+    if (root.bar && root.bar.showTooltip) root.bar.showTooltip(root, root.tooltipText)
+  }
+
+  function hideHoverTooltip() {
+    if (root.bar && root.bar.hideTooltip) root.bar.hideTooltip(root)
+  }
+
+  HoverHandler {
+    id: hover
+    onHoveredChanged: {
+      if (hover.hovered) root.showHoverTooltip()
+      else root.hideHoverTooltip()
+    }
+  }
+
+  onSnapshotChanged: {
+    if (root.tooltipHovered) root.showHoverTooltip()
+  }
   // Match WidgetButton's horizontalMargin so the widget keeps the same
   // breathing room as its neighbours instead of butting against them.
   readonly property real hMargin: Style.spaceReal(8.5)
@@ -259,11 +295,22 @@ BarWidget {
     stdout: SplitParser {
       onRead: function(line) { root.ingest(line) }
     }
+    // If the collector dies (exception, OOM kill, etc.) restart it after a
+    // short delay so the widget self-heals instead of showing "–" forever.
+    onExited: collectorRestart.restart()
+  }
+
+  Timer {
+    id: collectorRestart
+    interval: 2000
+    onTriggered: {
+      if (!collector.running) collector.running = true
+    }
   }
 
   // ---- surface -----------------------------------------------------------------
   implicitWidth: root.anyShown ? row.implicitWidth : iconButton.implicitWidth
-  implicitHeight: root.bar ? root.bar.barSize : Style.bar.sizeHorizontal
+  implicitHeight: root.barSize
 
   Row {
     id: row

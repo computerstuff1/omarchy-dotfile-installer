@@ -98,7 +98,7 @@ Item {
     owner: root.hostWidget
 
     contentWidth: Style.space(272)
-    contentHeight: Style.space(310)
+    contentHeight: Style.space(250)
 
     Column {
       width: parent.width
