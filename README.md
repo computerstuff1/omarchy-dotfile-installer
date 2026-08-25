@@ -41,6 +41,28 @@ to `<name>.bak.<timestamp>` before being overwritten; bundled plugins are
 overwritten in place (stale `*.bak.*` plugin dirs from older runs are pruned
 first so they can't shadow the live plugins).
 
+## Run order on a fresh install
+
+Run these in this order after removing the preinstalled applications:
+
+1. **omarchy-pkg-installer** — installs the apps
+   ```bash
+   git clone https://github.com/computerstuff1/omarchy-pkg-installer.git
+   cd omarchy-pkg-installer
+   ./install.sh
+   ```
+2. **this installer** — applies the theme, font, and all configs
+   ```bash
+   git clone https://github.com/computerstuff1/omarchy-dotfile-installer.git
+   cd omarchy-dotfile-installer
+   ./install.sh
+   ```
+
+Installing the apps first and applying configs last means the font
+(JetBrainsMono) and the theme are in place before the shell restarts, so the
+new apps pick them up immediately — e.g. ghostty reads its config and the
+dynamic theme file that `omarchy theme set` writes.
+
 ## What the installer does
 
 1. Preflight checks (`omarchy`).
