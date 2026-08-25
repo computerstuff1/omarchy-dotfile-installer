@@ -4,7 +4,7 @@
 
 set -uo pipefail
 
-repo=$(checkupdates --nocolor 2>/dev/null | wc -l)
+repo=$(timeout 60 checkupdates --nocolor 2>/dev/null | wc -l)
 
 aur=0
 if command -v yay >/dev/null 2>&1; then
