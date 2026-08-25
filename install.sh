@@ -94,25 +94,6 @@ install_file() {
   ok "installed $(basename "$dst")"
 }
 
-# Copy a directory's contents into place, backing up an existing target dir.
-install_dir() {
-  local src="$1" dst="$2"
-  if [[ ! -d "$src" ]]; then
-    warn "skipping missing source dir: $src"
-    return 0
-  fi
-  if [[ -e "$dst" ]]; then
-    local bak
-    bak="$dst.bak.$(date +%s)"
-    mv "$dst" "$bak"
-    warn "backed up existing dir: $dst -> $(basename "$bak")"
-    prune_backups "$dst"
-  fi
-  mkdir -p "$dst"
-  cp -r "$src"/. "$dst"/
-  ok "installed $(basename "$dst")/"
-}
-
 # Copy a directory's contents into place WITHOUT backing up the target.
 # Used for bundled plugins: they are repo-owned verbatim copies (no user data
 # worth rolling back), and renaming the plugin dir to a ".bak" sibling would
@@ -232,6 +213,8 @@ step_configs() {
   info "installing terminal configs"
   install_file "$CONFIG_DIR/foot/foot.ini"           "$HOME/.config/foot/foot.ini"
   install_file "$CONFIG_DIR/ghostty/config"          "$HOME/.config/ghostty/config"
+  install_file "$CONFIG_DIR/alacritty/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+  install_file "$CONFIG_DIR/kitty/kitty.conf"         "$HOME/.config/kitty/kitty.conf"
 
   info "installing app configs"
   install_file "$CONFIG_DIR/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc"

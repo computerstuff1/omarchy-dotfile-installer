@@ -13,7 +13,7 @@ workspaces plugins, and terminal and app configs.
 | Icon theme | Yaru-red (applied by the Dracula theme) |
 | Wallpaper | "They live Desktop.png" (plus 2 others) |
 | Status bar | Custom `rob.bar` layout (menu, workspaces, clock, vitals, system updates, tray) |
-| Terminals | foot, ghostty (font size 11) |
+| Terminals | foot, ghostty, alacritty, kitty (font size 11) |
 | Apps | fastfetch, starship configs |
 | Hyprland | monitor (auto-detect), look'n'feel overrides |
 
@@ -36,8 +36,10 @@ cd omarchy-dotfile-installer
 ./install.sh
 ```
 
-The script is idempotent — re-running it is safe. Existing files are backed up
-to `<name>.bak.<timestamp>` before being overwritten.
+The script is idempotent — re-running it is safe. Config files are backed up
+to `<name>.bak.<timestamp>` before being overwritten; bundled plugins are
+overwritten in place (stale `*.bak.*` plugin dirs from older runs are pruned
+first so they can't shadow the live plugins).
 
 ## What the installer does
 
@@ -62,7 +64,7 @@ install.sh                  # the installer
 config/                     # dotfiles, mirrored into ~/.config/
   hypr/                     # hyprland.lua, monitors.lua, looknfeel.lua
   omarchy/                  # shell.json, bin/, defaults/agent, branding/about.txt
-  foot/ ghostty/            # terminal configs (font size 11)
+  foot/ ghostty/ alacritty/ kitty/   # terminal configs (font size 11)
   fastfetch/ starship.toml
 plugins/                    # bundled rob.* plugins (bar, clock, menu, system-updates, vitals, workspaces)
 backgrounds/dracula/        # wallpapers
