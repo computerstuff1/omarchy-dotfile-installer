@@ -85,7 +85,7 @@ BarWidget {
       text: root.pacmanIcon
       active: root.updateCount > 0
       activeColor: "#ffd75f"
-      slotSize: 12
+      slotSize: Style.bar.statusSlot
       opticalSize: 12
       horizontalMargin: 0
       fontSize: 12
