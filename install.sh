@@ -113,6 +113,22 @@ install_dir() {
   ok "installed $(basename "$dst")/"
 }
 
+# Copy a directory's contents into place WITHOUT backing up the target.
+# Used for bundled plugins: they are repo-owned verbatim copies (no user data
+# worth rolling back), and renaming the plugin dir to a ".bak" sibling would
+# create a duplicate manifest with the same id, which shadows the live plugin
+# in the shell's plugin registry. Overwriting in place avoids that entirely.
+install_dir_overwrite() {
+  local src="$1" dst="$2"
+  if [[ ! -d "$src" ]]; then
+    warn "skipping missing source dir: $src"
+    return 0
+  fi
+  mkdir -p "$dst"
+  cp -r "$src"/. "$dst"/
+  ok "installed $(basename "$dst")/"
+}
+
 # ----------------------------------------------------------------------------
 # Steps
 # ----------------------------------------------------------------------------
@@ -183,9 +199,18 @@ step_theme() {
 step_plugins() {
   banner "Plugins"
 
+  # Remove stale backups left by older installer runs. A leftover
+  # "rob.*.bak.*" dir duplicates the live plugin's manifest id and shadows it
+  # in the shell's plugin registry, so the live edits never apply.
+  local plugin_bak
+  while IFS= read -r -d '' plugin_bak; do
+    rm -rf -- "$plugin_bak"
+    warn "removed stale plugin backup: $(basename "$plugin_bak")"
+  done < <(find "$HOME/.config/omarchy/plugins" -maxdepth 1 -name '*.bak.*' -print0 2>/dev/null)
+
   info "installing bundled plugins"
   for plugin in "${BUNDLED_PLUGINS[@]}"; do
-    install_dir "$PLUGINS_DIR/$plugin" "$HOME/.config/omarchy/plugins/$plugin"
+    install_dir_overwrite "$PLUGINS_DIR/$plugin" "$HOME/.config/omarchy/plugins/$plugin"
   done
 }
 
