@@ -158,6 +158,15 @@ BarWidget {
   readonly property color foreground: root.bar ? root.bar.foreground : Color.foreground
   readonly property string fontFamily: root.bar ? root.bar.fontFamily : Style.font.family
   readonly property real cellSize: Style.font.body
+  // Metric icon + separator colors (tuned to the Dracula palette).
+  readonly property color separatorColor: "#6272a4"
+
+  function metricIconColor(key) {
+    if (key === "cpu") return "#ffffff"
+    if (key === "mem") return "#ffffff"
+    if (key === "disk") return "#ffffff"
+    return root.foreground
+  }
 
   // ---- hover tooltip ---------------------------------------------------------
   // The bar's tooltip system only fires for targets that expose
@@ -325,12 +334,22 @@ BarWidget {
 
       Row {
         required property string modelData
+        required property int index
         spacing: Style.space(3)
         anchors.verticalCenter: parent.verticalCenter
 
         Text {
+          visible: index > 0
+          text: "|"
+          color: root.separatorColor
+          font.family: root.fontFamily
+          font.pixelSize: root.cellSize
+          anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Text {
           text: root.metricIcon(modelData)
-          color: root.cellColor(root.metricPercent(modelData))
+          color: root.metricIconColor(modelData)
           font.family: root.fontFamily
           font.pixelSize: root.cellSize
           anchors.verticalCenter: parent.verticalCenter
