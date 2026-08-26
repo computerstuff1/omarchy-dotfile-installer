@@ -34,7 +34,7 @@ workspaces plugins, and terminal and app configs.
 ```bash
 git clone https://github.com/computerstuff1/omarchy-dotfile-installer.git
 cd omarchy-dotfile-installer
-./install.sh
+./install.sh    DON'T USE
 ```
 
 The script is idempotent — re-running it is safe. Config files are backed up
