@@ -150,6 +150,6 @@ style = "#67c3ef"
 
 [time]
 disabled = false
-time_format = "%I:%M:%S %p"
+time_format = "%I:%M %p"
 style = "bold #e0f2fe"
 format = "[$time]($style)"
